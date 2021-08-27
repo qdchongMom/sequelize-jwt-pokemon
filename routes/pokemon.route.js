@@ -36,23 +36,15 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/update/:id", async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
-    const id = req.params.id;
-    const reqBody = req.body;
+    const pokemonId = req.params.id;
+    const pokemonToUpdate = await db.Pokemon.findByPk(pokemonId);
 
-    const [numOfUpdatedRecord, updatedRecord] = await db.Pokemon.update(
-      reqBody,
-      {
-        where: {
-          id: id,
-        },
-        returning: true,
-      }
-    );
-    res.json({
-      message: `Updated ${numOfUpdatedRecord} records successfully!`,
-    });
+    if (pokemonToUpdate === null) return res.sendStatus(404);
+    await pokemonToUpdate.update(req.body);
+
+    res.json(pokemonToUpdate);
   } catch (error) {
     next(error);
   }
