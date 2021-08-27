@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
+      // when copying over to migration file, it needs to be Sequelize.STRING
       japaneseName: {
         type: DataTypes.STRING,
       },

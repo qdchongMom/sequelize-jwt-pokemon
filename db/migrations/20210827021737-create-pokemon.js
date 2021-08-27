@@ -13,6 +13,15 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
+      japaneseName: {
+        type: Sequelize.STRING,
+      },
+      baseHp: {
+        type: Sequelize.INTEGER,
+      },
+      category: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
