@@ -43,6 +43,9 @@ module.exports = (sequelize, DataTypes) => {
           const salt = await bcrypt.genSaltSync(10);
           user.password = bcrypt.hashSync(user.password, salt);
         },
+        afterCreate: (record) => {
+          delete record.dataValues.password;
+        },
       },
     }
   );
