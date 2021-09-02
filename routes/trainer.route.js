@@ -39,7 +39,7 @@ router.get("/search/:username", protectRoute, async (req, res, next) => {
   }
 });
 
-router.get("/:id/pokemons", async (req, res, next) => {
+router.get("/:id/pokemons", protectRoute, async (req, res, next) => {
   try {
     const trainerId = req.params.id;
     const trainer = await db.Trainer.findOne({
@@ -49,7 +49,6 @@ router.get("/:id/pokemons", async (req, res, next) => {
       include: {
         model: db.Pokemon,
       },
-      //include: db.Pokemon,
     });
     console.log(trainer.Pokemons[0].name);
     res.json(trainer);
