@@ -3,6 +3,7 @@ const express = require("express");
 const { protectRoute } = require("../middleware/auth");
 const createJWTToken = require("../config/jwt");
 const bcrypt = require("bcryptjs");
+const trainer = require("../db/models/trainer");
 
 const router = express.Router();
 
@@ -34,6 +35,25 @@ router.get("/search/:username", protectRoute, async (req, res, next) => {
     res.send(trainer);
   } catch (err) {
     console.log(err);
+    next(err);
+  }
+});
+
+router.get("/:id/pokemons", async (req, res, next) => {
+  try {
+    const trainerId = req.params.id;
+    const trainer = await db.Trainer.findOne({
+      where: {
+        id: trainerId,
+      },
+      include: {
+        model: db.Pokemon,
+      },
+      //include: db.Pokemon,
+    });
+    console.log(trainer.Pokemons[0].name);
+    res.json(trainer);
+  } catch (err) {
     next(err);
   }
 });
